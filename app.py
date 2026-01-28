@@ -2,7 +2,7 @@ import streamlit as st
 import google.generativeai as genai
 
 # Cấu hình API xịn của bạn
-GOOGLE_API_KEY = "AIzaSyBCmudyAOQeAFacBdkO0dL2eYtvFEy1XIQ"
+GOOGLE_API_KEY = "AIzaSyBCmudyAOQeAFacBdkO0dL2eYtvFEylXiQ"
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # ĐÂY LÀ DÒNG QUAN TRỌNG NHẤT: Sửa tên mô hình chuẩn xác
