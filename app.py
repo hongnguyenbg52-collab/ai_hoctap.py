@@ -5,7 +5,7 @@ import google.generativeai as genai
 GOOGLE_API_KEY = "AIzaSyBCmudyAOQeAFacBdkO0dL2eYtvFEylXiQ"
 
 genai.configure(api_key=GOOGLE_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-pro')
+model = genai.GenerativeModel('models/gemini-1.5-flash')
 
 # GIAO DIỆN WEB
 st.set_page_config(page_title="Học Tập Thông Minh AI", page_icon="📝")
