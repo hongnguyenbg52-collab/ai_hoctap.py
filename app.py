@@ -11,7 +11,7 @@ my_api_key = "AIzaSyBCmudyAOQeAFacBdkO0dL2eYtvFEylXiQ"
 genai.configure(api_key=my_api_key.strip())
 
 # Chọn model chuẩn (Không dùng models/ hay latest nữa cho đỡ lỗi)
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-pro')
 
 # --- GIAO DIỆN WEB ---
 st.set_page_config(page_title="Trợ Lý Học Tập", page_icon="🤖")
