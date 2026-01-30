@@ -1,41 +1,29 @@
 import streamlit as st
 import google.generativeai as genai
 
-# --- PHẦN CẤU HÌNH QUAN TRỌNG ---
-# Bạn dán mã API vào giữa hai dấu ngoặc kép bên dưới.
-# Tui đã thêm lệnh .strip() để tự sửa lỗi nếu bạn lỡ copy thừa dấu cách.
-# Thay dòng chữ bên dưới bằng mã thật của bạn (bắt đầu bằng AIza...)
-my_api_key = "AIzaSyBCmudyAOQeAFacBdkO0dL2eYtvFEylXiQ"
+# Lấy khóa từ hệ thống bảo mật của Streamlit
+try:
+    api_key = st.secrets["GOOGLE_API_KEY"]
+    genai.configure(api_key=api_key)
+except:
+    st.error("Thiếu mã API trong phần Secrets!")
 
-# Cấu hình API (Thêm .strip() để xóa dấu cách thừa - Chữa lỗi 400)
-genai.configure(api_key=my_api_key.strip())
+# Dùng model chuẩn xác nhất
+model = genai.GenerativeModel('gemini-1.5-flash')
 
-# Chọn model chuẩn (Không dùng models/ hay latest nữa cho đỡ lỗi)
-model = genai.GenerativeModel('gemini-pro')
+st.set_page_config(page_title="AI Học Tập", page_icon="📚")
+st.title("📚 Trợ Lý Phân Tích Bài Học")
 
-# --- GIAO DIỆN WEB ---
-st.set_page_config(page_title="Trợ Lý Học Tập", page_icon="🤖")
-st.title("🤖 Trợ Lý Phân Tích Bài Học")
-st.write("Dán bài học vào đây, AI sẽ tóm tắt giúp bạn!")
+input_text = st.text_area("Nội dung bài học:", height=200)
 
-# Ô nhập liệu
-input_text = st.text_area("Nội dung cần tóm tắt:", height=200)
-
-# Nút bấm xử lý
 if st.button("🚀 Phân tích ngay"):
     if input_text:
-        with st.spinner('Đang đọc bài... đợi xíu nha...'):
+        with st.spinner('AI đang làm việc...'):
             try:
-                # Gửi yêu cầu cho AI
-                prompt = f"Hãy tóm tắt nội dung sau thành các gạch đầu dòng dễ nhớ: {input_text}"
-                response = model.generate_content(prompt)
-                
-                # Hiển thị kết quả
+                response = model.generate_content(input_text)
                 st.markdown("---")
-                st.success("Xong rồi nè! 👇")
                 st.markdown(response.text)
             except Exception as e:
-                st.error("Vẫn lỗi hả? Chụp màn hình gửi tui xem nhé!")
-                st.error(f"Chi tiết lỗi: {e}")
+                st.error(f"Lỗi: {e}")
     else:
-        st.warning("Ơ kìa, bạn chưa dán bài học vào!")
+        st.warning("Hãy nhập nội dung trước nhé!")
